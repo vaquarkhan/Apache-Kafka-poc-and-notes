@@ -1,0 +1,52 @@
+<project name="Map Reduce Jobs" default="dist" basedir=".">
+  <description>
+    Collection of common and trivial map reduce jobs
+  </description>
+
+  <!-- set global properties for this build -->
+
+  <property name="src" location="src"/>
+  <property name="build" location="build"/>
+  <property name="dist"  location="dist"/>
+
+  <target name="init">
+    <!-- Create the time stamp -->
+    <tstamp/>
+    <!-- Create the build directory structure used by compile -->
+    <mkdir dir="${build}"/>
+  </target>
+
+  <target name="compile" depends="init"
+        description="compile the source " >
+    <javac srcdir="${src}" destdir="${build}">
+      <classpath>
+        <pathelement path="${classpath}"/>
+        <fileset dir="lib">
+          <include name="**/*.jar"/>
+        </fileset>
+      </classpath>
+    </javac>
+  </target>
+
+  <target name="dist" depends="compile"
+        description="generate the distribution" >
+    <!-- Create the distribution direcftory -->
+    <mkdir dir="${dist}/lib"/>
+    <mkdir dir="${build}/lib"/>
+    <!-- Put everything in ${build}/lib into the lib/ dir of build -->
+    <copy todir="${build}/lib">
+      <fileset dir="lib" includes="*.jar" />
+    </copy>
+
+    <jar jarfile="${dist}/lib/mapreduce.jar" basedir="${build}">
+
+    </jar>
+  </target>
+
+  <target name="clean"
+        description="clean up" >
+    <!-- Delete the ${build} and ${dist} directory trees -->
+    <delete dir="${build}"/>
+    <delete dir="${dist}"/>
+  </target>
+</project>
