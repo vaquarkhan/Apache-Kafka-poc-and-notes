@@ -143,4 +143,34 @@ By using a Producer, you can publish messages to the Kafka cluster. In this less
 		bin/kafka-topics.sh --zookeeper zookeeper1:2181/kafka --topic test5 --describe
 
 
-   
+Consumers are the only way to get messages out of a Kafka cluster. In this lesson, we'll retreive some of the messages that we've produced in the last lesson and learn a bit about how consumers keep track of their offset.
+
+### Start a console consumer to a topic
+
+		bin/kafka-console-consumer.sh --bootstrap-server kafka3:9092 --topic test
+
+### Consuming messages from the beginning
+
+		bin/kafka-console-consumer.sh --bootstrap-server kafka3:9092 --topic test --from-beginning
+
+
+Kafka was meant to read multiple messages at once using consumer groups. This way, the speed at which messages are read increases. The consumers work very intelligently, in that they never read the same messages, and keep track of where they left off using the offset. In this lesson, we'll discover the power of consumer groups and how to describe their characteristics.
+
+### Start a consumer group for a topic
+
+		bin/kafka-console-consumer.sh --bootstrap-server kafka3:9092 --topic test --group application1
+
+### Start producing new messages to a topic
+
+		bin/kafka-console-producer.sh --broker-list kafka1:9092 --topic test
+
+### Start a consumer group and read messages from the beginning
+
+		bin/kafka-console-consumer.sh --bootstrap-server kafka3:9092 --topic test --group application1 --from-beginning
+
+## List the consumer groups
+
+		bin/kafka-consumer-groups.sh --bootstrap-server kafka3:9092 --list
+
+Describe a consumer group
+bin/kafka-consumer-groups.sh --bootstrap-server kafka3:9092 --describe --group application1
