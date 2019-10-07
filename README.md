@@ -117,5 +117,30 @@ Now that we've setup our Kafka cluster, let's explore some of the various comman
 
 
 
+   ------------------
    
+   
+By using a Producer, you can publish messages to the Kafka cluster. In this lesson we'll produce some messages to the topics that we've created thus far. There are a few items to remember when creating topics and default partitions.
+
+### Start a console producer to topic 'test'
+
+		bin/kafka-console-producer.sh --broker-list kafka1:9092 --topic test
+
+### Add the acks=all flag to your producer
+
+		bin/kafka-console-producer.sh --broker-list kafka1:9092 --topic test --producer-property acks=all
+
+### Create a topic with the console producer (not recommended)
+
+		bin/kafka-console-producer.sh --broker-list kafka1:9092 --topic test4
+
+### List the newly created topic
+
+		bin/kafka-topics.sh --zookeeper zookeeper1:2181/kafka --list
+
+### View the partitions for a topic
+
+		bin/kafka-topics.sh --zookeeper zookeeper1:2181/kafka --topic test5 --describe
+
+
    
